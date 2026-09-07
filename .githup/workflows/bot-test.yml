@@ -2,42 +2,29 @@ name: SOVT Translation Bot
 
 on:
   workflow_dispatch:
-    inputs:
-      text:
-        description: "النص المراد ترجمته"
-        required: true
-        default: "Hello"
-      source:
-        description: "لغة المصدر"
-        required: true
-        default: "en"
-      target:
-        description: "لغة الهدف"
-        required: true
-        default: "ar"
 
 jobs:
   translate:
     runs-on: ubuntu-latest
 
     steps:
-      - name: تحميل المشروع
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: إعداد Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: تثبيت المتطلبات
+      - name: Install requirements
         run: pip install -r requirements.txt
 
-      - name: تثبيت Chromium
+      - name: Install Chromium
         run: python -m playwright install --with-deps chromium
 
-      - name: تشغيل البوت
+      - name: Run bot
         run: python bot.py
         env:
-          TEXT: ${{ inputs.text }}
-          SOURCE: ${{ inputs.source }}
-          TARGET: ${{ inputs.target }}
+          TEXT: "Hello"
+          SOURCE: "en"
+          TARGET: "ar"
